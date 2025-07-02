@@ -1,0 +1,596 @@
+/* ============================= */
+/*         Общие стили            */
+/* ============================= */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  background: #121212;
+  color: white;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 30px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden; /* Убираем горизонтальный скролл */
+}
+
+button {
+  display: block;
+  margin: 20px auto 0;
+  background: #00ccff;
+  color: #121212;
+  border: none;
+  padding: 12px 0;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background: #0099cc;
+}
+
+
+
+/* ============================= */
+/*       Боковая панель           */
+/* ============================= */
+
+#sidebar {
+  width: 120px;           /* фиксированная ширина */
+  border-right: 1px solid #333;
+  padding-right: 10px;
+  overflow-y: auto;       /* вертикальный скролл */
+  max-height: 90vh;
+}
+
+/* ============================= */
+/*     Контейнеры страницы        */
+/* ============================= */
+
+#main-container {
+  width: 70%;             /* занимает 70% ширины окна */
+  max-width: 1200px;      /* максимум 1200px */
+  min-width: 300px;       /* минимум 300px */
+  margin: 0 auto;         /* центрирование */
+  box-sizing: border-box;
+  background: #1e1e1e;
+  border-radius: 12px;
+  overflow-x: hidden;
+  padding: 0 30px;
+  display: flex;
+  flex-direction: column; /* элементы идут сверху вниз */
+  align-items: center; /* по горизонтали центр */
+  
+  }
+
+/* Контейнер с обложками альбомов (вертикальный список) */
+#album-covers-container {
+  width: 100px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-right: 1px solid #333;
+  padding-right: 10px;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-sizing: border-box;
+}
+
+/* Контент справа от обложек */
+#content-wrapper {
+  
+  width: 80%;
+  max-width: 800px;
+  min-width: 300px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+/* Адаптив для маленьких экранов */
+@media (max-width: 600px) {
+  #content-wrapper {
+    width: 90%;
+    max-width: none;
+    min-width: auto;
+  }
+}
+
+/* ============================= */
+/* ========== Заголовок ======== */
+/* ============================= */
+
+@font-face {
+  font-family: 'MyCustomFont'; /* Имя шрифта, чтобы использовать в font-family */
+  src: url('../font/ofont.ru_Sprite Graffiti.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.top-text-field {
+  font-family: 'MyCustomFont'; /* интересный современный шрифт */
+  font-size: clamp(2.5rem, 5vw, 6rem); /* адаптивный размер — от 2.5 до 6 rem */
+  color: white;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  margin-top: 1rem;
+  width: 100%;
+  text-align: center;
+  user-select: none; /* чтобы нельзя было случайно выделить */
+}
+
+
+
+.header {
+  flex: 0 0 auto;
+}
+
+.content-wrapper {
+  flex: 1 1 auto;
+  overflow: visible; /* или убрать overflow */
+}
+
+/* ============================= */
+/*       Обложки альбомов         */
+/* ============================= */
+
+.album-cover-item {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* Эффекты для псевдоэлемента рамки */
+.album-cover-item::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border: 6px solid transparent;
+  border-radius: 12px;
+  transition: border-color 0.3s ease;
+  z-index: -1;
+}
+
+.album-cover-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.album-cover-item:hover::before {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.album-cover-item.selected {
+  border-color: #00ccff;
+  z-index: 2;
+}
+
+/* Стили для контейнера с полосой прокрутки */
+#album-covers-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+#album-covers-container::-webkit-scrollbar-thumb {
+  background: #00ccff;
+  border-radius: 3px;
+}
+
+/* ============================= */
+/*       Информация об альбоме    */
+/* ============================= */
+
+.album-info {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 25px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #00ccff;
+}
+
+.album-info img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* ============================= */
+/*        Выпадающий список       */
+/* ============================= */
+
+#track-select {
+  font-size: 18px;
+  padding: 6px 10px;
+  background: #222;
+  color: #00ccff;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  max-width: 100%;
+  width: 100%;
+}
+
+/* ============================= */
+/*          Слайдеры             */
+/* ============================= */
+
+.slider-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.slider-group {
+  flex: 1;
+}
+
+.slider-group label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+input[type="range"] {
+  width: 100%;
+  appearance: none;
+  height: 8px;
+  background: #444;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #00ccff;
+  cursor: pointer;
+  border: none;
+  margin-top: -6px;
+}
+
+/* ============================= */
+/*         Общий счёт             */
+/* ============================= */
+
+.total-score {
+  margin-top: 40px;
+  font-size: 36px;
+  text-align: center;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  color: #00ccff;
+  font-weight: 700;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ============================= */
+/*          Статус сохранения     */
+/* ============================= */
+
+#save-status {
+  text-align: center;
+  margin-top: 10px;
+  color: #00ccff;
+  font-weight: 600;
+  min-height: 24px;
+  font-size: 18px;
+}
+
+/* ============================= */
+/*       Кнопки управления        */
+/* ============================= */
+
+#show-results-btn {
+  margin-top: 12px;
+}
+
+/* ============================= */
+/*       Итоги и результаты       */
+/* ============================= */
+
+#results-container {
+  margin-top: 40px;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  display: none;
+  color: #00ccff;
+}
+
+#album-average {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#track-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#track-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #333;
+  font-size: 18px;
+}
+
+/* ============================= */
+/*       Кнопка добавления        */
+/* ============================= */
+
+.album-card.add-card {
+  width: 120px;
+  height: 120px;
+  background-color: #222;
+  color: #00ccff;
+  font-size: 64px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #00ccff;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: -40px; /* Поднимаем выше */
+  transition: background-color 0.3s ease;
+}
+
+.album-card.add-card:hover {
+  background-color: #333;
+}
+
+.add-album-button {
+  font-size: 40px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background: white;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 80px;
+  height: 80px;
+  box-sizing: border-box;
+  user-select: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.add-album-button:hover {
+  background-color: #f0f0f0;
+  border-color: #00ccff;
+}
+
+/* ============================= */
+/*       Модальное окно           */
+/* ============================= */
+
+#modal-overlay {
+  display: none; /* скрыто по умолчанию */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+#modal-overlay.active {
+  display: flex;
+}
+
+/* Содержимое модального окна */
+#modal-content {
+  background: #121212;
+  padding: 20px 25px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 15px #222;
+  position: relative;
+  animation: fadeInScale 0.3s ease forwards;
+}
+
+/* Анимация появления */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Кнопки формы */
+#add-album-form button {
+  cursor: pointer;
+  padding: 8px 14px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #00ccff;
+  color: #121212;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+#add-album-form button:hover {
+  background-color: #0099cc;
+}
+
+#add-album-form button[type="button"] {
+  background-color: #00ccff;
+}
+
+#add-album-form button[type="button"]:hover {
+  background-color: #0099cc;
+}
+
+/* Инпуты и textarea */
+#add-album-form input[type="text"],
+#add-album-form textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #000;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background: #222;
+  color: #00ccff;
+  font-size: 16px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* ============================= */
+/*       Итоговый баланс          */
+/* ============================= */
+
+#final-balance {
+  margin-top: 60px;
+  font-size: 42px;
+  font-weight: 700;
+  text-align: center;
+  color: #00ccff;
+}
+
+/* ============================= */
+/*         Плавное появление      */
+/* ============================= */
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.7s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================= */
+/*         Дроп картинки         */
+/* ============================= */
+
+#drop-zone {
+  border: 2px dashed #00ccff;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  color: #00ccff;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  user-select: none; /* чтобы текст не выделялся при перетаскивании */
+}
+
+#drop-zone.dragover {
+  background-color: rgba(0, 204, 255, 0.1);
+  border-color: #00ccff;
+}
+
+
+/* ============================= */
+/*         Удаление картинки         */
+/* ============================= */
+#cover-preview {
+  position: relative;
+  width: 200px;       /* размер превью */
+  height: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #333;
+  display: none;      /* по умолчанию скрыто */
+}
+
+#cover-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#cover-preview {
+  position: relative; /* чтобы кнопка позиционировалась относительно превью */
+  display: inline-block; /* по размеру содержимого */
+}
+
+#remove-cover-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #00ccff;
+  font-size: 48px;
+  line-height: 48px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  user-select: none;
+  transition: background 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none; /* чтобы кнопка не мешала кликам, когда скрыта */
+}
+
+/* Показываем кнопку при наведении на превью */
+#cover-preview:hover #remove-cover-btn {
+  opacity: 0.8;
+  pointer-events: auto; /* включаем клики */
+}
+
+#remove-cover-btn:hover,
+#remove-cover-btn:focus {
+  background: rgba(0, 0, 0, 0.9);
+  opacity: 1;
+  outline: none;
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Оценка треков альбома</title>
+  <link rel="stylesheet" href="css/styles.css" />
+
+</head>
+
+<body>
+
+  <div id="album-covers-container" aria-label="Выбор альбома" role="list">
+    <!-- Обложки альбомов вставляются через JS -->
+    <div class="album-card add-card" id="open-modal-button">+</div>
+    <div class="album-card add-card">+</div>
+  </div>
+
+  <div id="main-container" style="display: flex; height: 100vh;">
+
+    <div class="top-text-field">
+      Гаджишка     делает
+    </div>
+
+    <div id="content-wrapper" style="flex-grow: 1; overflow-y: auto; padding-left: 20px;">
+      <div class="album-info">
+        <img id="album-cover" src="" alt="Обложка альбома" />
+        <div>
+          <div id="album-name" style="font-size:28px; font-weight:700; margin-bottom:6px; color:#00ccff;">Альбом</div>
+          <div id="artist-name" style="font-size:24px; font-weight:600; color:#00ccff;">Исполнитель</div>
+        </div>
+      </div>
+
+      <select id="track-select" aria-label="Выбор трека">
+        <!-- Заполняется скриптом -->
+      </select>
+
+      <div class="slider-row">
+        <div class="slider-group">
+          <label>Рифмы / Хуифмы и Панчи <span id="val1">5</span></label>
+          <input type="range" id="s1" min="1" max="10" value="5" />
+        </div>
+        <div class="slider-group">
+          <label>Калъюктура / Дристмика <span id="val2">5</span></label>
+          <input type="range" id="s2" min="1" max="10" value="5" />
+        </div>
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-group">
+          <label>Газ-газ / Делаем <span id="val3">5</span></label>
+          <input type="range" id="s3" min="1" max="10" value="5" />
+        </div>
+        <div class="slider-group">
+          <label>Дрочка на негров / Свага <span id="val4">5</span></label>
+          <input type="range" id="s4" min="1" max="10" value="5" />
+        </div>
+      </div>
+
+      <div class="slider-group" style="margin-bottom:0;">
+        <label>Дабл Ю / Вайбик <span id="val5">5</span></label>
+        <input type="range" id="s5" min="1" max="10" value="5" />
+      </div>
+
+      <div class="total-score" id="total">--- / ---</div>
+
+      <div id="save-status"></div>
+
+      <button id="save-btn" type="button">Сохранить</button>
+      <button id="show-results-btn" type="button">Показать итоги</button>
+
+      <div id="results-container">
+        <div id="album-average">Рейтинг альбома</div>
+        <ul id="track-list"></ul>
+      </div>
+    </div> <!-- конец content-wrapper -->
+
+  </div> <!-- конец main-container -->
+
+  <!-- Модальное окно -->
+  <div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="modal-content">
+      <h3 id="modal-title">Добавить новый альбом</h3>
+      <form id="add-album-form">
+        <label for="new-album-name">
+          Название альбома:<br />
+          <input type="text" id="new-album-name" required autocomplete="off" />
+        </label><br /><br />
+
+        <label for="new-album-artist">
+          Исполнитель:<br />
+          <input type="text" id="new-album-artist" required autocomplete="off" />
+        </label><br /><br />
+
+        <label>Загрузить обложку:</label><br />
+        <div id="drop-zone" tabindex="0" role="button" aria-label="Выбрать или перетащить файл обложки">
+          Перетащите файл сюда или кликните для выбора
+        </div>
+        <input type="file" id="album-cover-file" name="albumCoverFile" accept="image/*" style="display:none;"
+          required />
+        <div id="cover-preview" style="display: none;">
+          <img src="" alt="Обложка альбома" />
+          <button id="remove-cover-btn" aria-label="Удалить обложку">&times;</button>
+          <!-- Здесь будет превью загруженной обложки -->
+        </div><br /><br />
+
+        <label for="new-album-tracks">
+          Треки (через запятую):<br />
+          <textarea id="new-album-tracks" rows="3" required></textarea>
+        </label><br /><br />
+
+        <button type="submit">Добавить альбом</button>
+        <button type="button" id="cancel-add-album">Отмена</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
